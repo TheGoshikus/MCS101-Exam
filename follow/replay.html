@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Follow — записи сессий</title>
+  <link rel="stylesheet" href="css/replay.css">
+  <script src="js/config.js"></script>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar__head">
+      <h1>Записи сессий</h1>
+      <div class="auth" id="auth" hidden>
+        <input type="password" id="token" placeholder="ADMIN_TOKEN" autocomplete="current-password">
+        <button type="button" id="token-save">Войти</button>
+      </div>
+      <div class="filters">
+        <select id="filter">
+          <option value="all">Все записи</option>
+          <option value="lead">Только с заявкой</option>
+          <option value="touch">Мобильные (касания)</option>
+          <option value="mouse">Десктоп (мышь)</option>
+        </select>
+        <button type="button" id="reload" title="Обновить список">↻</button>
+      </div>
+      <label class="import">
+        <input type="file" id="import" accept=".json,.jsonl,application/json">
+        <span>Открыть файл записи (.json / .jsonl)</span>
+      </label>
+      <p class="source" id="source"></p>
+    </div>
+    <ul class="sessions" id="sessions"></ul>
+  </aside>
+
+  <main class="player">
+    <div class="empty" id="empty">
+      <h2>Выберите запись слева</h2>
+      <p>Будут показаны движения курсора, касания и свайпы пальцем, прокрутка, клики по кнопкам и заполнение формы — в том порядке и темпе, как это делал посетитель.</p>
+    </div>
+
+    <div class="viewer" id="viewer" hidden>
+      <div class="info" id="info"></div>
+
+      <div class="stage-box" id="stage-box">
+        <div class="stage" id="stage">
+          <iframe id="frame" title="Запись страницы" tabindex="-1"></iframe>
+          <canvas class="trail" id="trail"></canvas>
+          <div class="cursor" id="cursor"></div>
+          <div class="finger" id="finger"></div>
+          <div class="toast" id="toast"></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button type="button" class="play" id="play" aria-label="Воспроизвести">▶</button>
+        <span class="time" id="time">0:00 / 0:00</span>
+        <div class="timeline" id="timeline">
+          <div class="timeline__fill" id="timeline-fill"></div>
+          <div class="timeline__marks" id="timeline-marks"></div>
+          <input type="range" id="seek" min="0" max="1000" value="0" step="1" aria-label="Перемотка">
+        </div>
+        <select id="speed" aria-label="Скорость">
+          <option value="1">1×</option>
+          <option value="2" selected>2×</option>
+          <option value="4">4×</option>
+          <option value="8">8×</option>
+        </select>
+        <label class="skip"><input type="checkbox" id="skip-idle" checked> пропускать паузы</label>
+      </div>
+
+      <div class="legend">
+        <span><i class="dot dot--click"></i>клик / тап</span>
+        <span><i class="dot dot--finger"></i>палец</span>
+        <span><i class="dot dot--goal"></i>цель</span>
+        <span><i class="dot dot--input"></i>форма</span>
+      </div>
+
+      <h3 class="log-title">Путь пользователя</h3>
+      <ol class="log" id="log"></ol>
+    </div>
+  </main>
+
+  <script src="js/replay.js"></script>
+</body>
+</html>

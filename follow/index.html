@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Follow — оставьте заявку</title>
+  <meta name="description" content="Follow: оставьте заявку, и мы свяжемся с вами в течение 15 минут.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js');</script>
+
+  <script src="js/config.js"></script>
+  <script src="js/tracker.js"></script>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a href="#top" class="logo" data-track="logo">Follow</a>
+      <nav class="nav">
+        <a href="#benefits" data-track="nav_benefits">Преимущества</a>
+        <a href="#steps" data-track="nav_steps">Как это работает</a>
+        <a href="#faq" data-track="nav_faq">Вопросы</a>
+      </nav>
+      <a href="#lead" class="btn btn--small" data-track="cta_header">Оставить заявку</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <section class="hero">
+      <div class="container hero__inner">
+        <div class="hero__text reveal">
+          <span class="badge">Ответим за 15 минут</span>
+          <h1>Follow — ведём вас от&nbsp;первой заявки до&nbsp;результата</h1>
+          <p class="lead">Расскажите о задаче — менеджер свяжется с вами, подберёт решение и посчитает стоимость. Бесплатно и без обязательств.</p>
+          <div class="hero__actions">
+            <a href="#lead" class="btn" data-track="cta_hero">Оставить заявку</a>
+            <a href="#steps" class="btn btn--ghost" data-track="cta_hero_more">Как это работает</a>
+          </div>
+          <ul class="hero__facts">
+            <li><strong>1 200+</strong> клиентов</li>
+            <li><strong>4,9</strong> средняя оценка</li>
+            <li><strong>15 мин</strong> на ответ</li>
+          </ul>
+        </div>
+        <div class="hero__visual reveal" aria-hidden="true">
+          <div class="orbit">
+            <span class="orbit__dot orbit__dot--1"></span>
+            <span class="orbit__dot orbit__dot--2"></span>
+            <span class="orbit__dot orbit__dot--3"></span>
+            <span class="orbit__core">F</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="benefits">
+      <div class="container">
+        <h2 class="section__title reveal">Почему выбирают Follow</h2>
+        <div class="cards">
+          <article class="card reveal">
+            <div class="card__icon">⚡</div>
+            <h3>Быстрый старт</h3>
+            <p>Первые результаты — уже в первую неделю. Без долгих согласований и лишних встреч.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon">🤝</div>
+            <h3>Личный менеджер</h3>
+            <p>Один человек на связи от заявки до результата. Отвечает в мессенджере и по телефону.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon">📊</div>
+            <h3>Прозрачные условия</h3>
+            <p>Фиксированная цена в договоре и понятный отчёт о каждом этапе работы.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tinted" id="steps">
+      <div class="container">
+        <h2 class="section__title reveal">Как это работает</h2>
+        <ol class="steps">
+          <li class="step reveal">
+            <span class="step__num">1</span>
+            <h3>Заявка</h3>
+            <p>Оставляете имя и телефон — это займёт меньше минуты.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step__num">2</span>
+            <h3>Звонок</h3>
+            <p>Менеджер уточняет задачу и предлагает решение с ценой.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step__num">3</span>
+            <h3>Запуск</h3>
+            <p>Подписываем договор и начинаем работу в тот же день.</p>
+          </li>
+        </ol>
+        <div class="center reveal">
+          <a href="#lead" class="btn" data-track="cta_steps">Хочу начать</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container container--narrow">
+        <h2 class="section__title reveal">Частые вопросы</h2>
+        <details class="faq reveal">
+          <summary data-track="faq_price">Сколько это стоит?</summary>
+          <p>Стоимость зависит от задачи. Менеджер посчитает её после короткого звонка — это бесплатно.</p>
+        </details>
+        <details class="faq reveal">
+          <summary data-track="faq_time">Как быстро вы свяжетесь?</summary>
+          <p>В рабочее время — в течение 15 минут. Если заявка пришла ночью — утром следующего дня.</p>
+        </details>
+        <details class="faq reveal">
+          <summary data-track="faq_contract">Работаете по договору?</summary>
+          <p>Да, всегда. Цена и сроки фиксируются в договоре до начала работы.</p>
+        </details>
+        <details class="faq reveal">
+          <summary data-track="faq_data">Что вы делаете с моими данными?</summary>
+          <p>Используем только для связи с вами по заявке и не передаём третьим лицам.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="section section--accent" id="lead">
+      <div class="container container--narrow">
+        <div class="form-card reveal">
+          <h2>Оставьте заявку</h2>
+          <p class="form-card__sub">Перезвоним в течение 15 минут и ответим на все вопросы.</p>
+
+          <form class="form" id="lead-form" novalidate>
+            <label class="field">
+              <span>Имя</span>
+              <input type="text" name="name" id="lead-name" autocomplete="name" placeholder="Как к вам обращаться" required>
+            </label>
+            <label class="field">
+              <span>Телефон</span>
+              <input type="tel" name="phone" id="lead-phone" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
+            </label>
+            <label class="field">
+              <span>Удобный способ связи</span>
+              <select name="channel" id="lead-channel">
+                <option value="call">Звонок</option>
+                <option value="telegram">Telegram</option>
+                <option value="whatsapp">WhatsApp</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Комментарий <em>(необязательно)</em></span>
+              <textarea name="comment" id="lead-comment" rows="3" placeholder="Коротко о задаче"></textarea>
+            </label>
+            <label class="check">
+              <input type="checkbox" name="consent" id="lead-consent" required>
+              <span>Согласен на обработку персональных данных</span>
+            </label>
+            <p class="form__error" id="lead-error" role="alert" hidden></p>
+            <button type="submit" class="btn btn--wide" data-track="lead_submit">Отправить заявку</button>
+          </form>
+
+          <div class="form-success" id="lead-success" hidden>
+            <div class="form-success__icon">✓</div>
+            <h3>Заявка отправлена!</h3>
+            <p>Мы свяжемся с вами в ближайшее время.</p>
+            <button type="button" class="btn btn--ghost" id="lead-again" data-track="lead_again">Отправить ещё одну</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>© Follow, 2026</span>
+      <a href="#lead" data-track="cta_footer">Связаться с нами</a>
+    </div>
+  </footer>
+
+  <a href="#lead" class="sticky-cta" data-track="cta_sticky_mobile">Оставить заявку</a>
+
+  <div class="cookie" id="cookie" hidden>
+    <p>Мы используем cookies и сервисы аналитики, чтобы сделать сайт удобнее. Продолжая пользоваться сайтом, вы соглашаетесь с этим.</p>
+    <button type="button" class="btn btn--small" id="cookie-ok" data-track="cookie_accept">Принять</button>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
