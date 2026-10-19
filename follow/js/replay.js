@@ -10,15 +10,35 @@
   const $ = (id) => document.getElementById(id);
 
   const GOALS = {
-    form_start: 'Начал заполнять форму',
-    form_invalid: 'Ошибка при отправке формы',
-    lead_submit: 'Заявка отправлена',
-    lead_error: 'Заявка не ушла (ошибка сети)',
-    scroll_25: 'Прокрутил 25% страницы',
-    scroll_50: 'Прокрутил 50% страницы',
-    scroll_75: 'Прокрутил 75% страницы',
-    scroll_100: 'Долистал до конца'
+    cta_click: 'Нажал кнопку заявки',
+    nav_click: 'Перешёл по меню',
+    card_select: 'Карточка «Узнаёте себя?»',
+    chip_click: 'Вопрос помощнику',
+    tab_switch: 'Вкладка Follow',
+    tone_select: 'Характер помощника',
+    faq_open: 'Открыл вопрос FAQ',
+    scroll_depth: 'Дошёл до блока',
+    form_step1_submit: 'Заявка отправлена',
+    form_q1: 'Анкета: вопрос 1',
+    form_q2: 'Анкета: вопрос 2',
+    form_q3: 'Анкета: вопрос 3',
+    form_q4: 'Анкета: вопрос 4',
+    form_q5: 'Анкета: вопрос 5',
+    form_complete: 'Анкета пройдена',
+    share_click: 'Поделился ссылкой'
   };
+
+  // Карточки и события, которые не нужно показывать отдельной строкой в журнале
+  const QUIET_GOALS = ['scroll_depth'];
+
+  function goalText(ev) {
+    const name = ev[2];
+    const p = ev[3] || {};
+    let text = GOALS[name] || name;
+    const details = Object.keys(p).map((k) => k + ': ' + p[k]).join(', ');
+    if (details) text += ' (' + details + ')';
+    return text;
+  }
 
   const COLORS = { c: 'var(--click)', ts: 'var(--finger)', g: 'var(--goal)', i: 'var(--input)', f: 'var(--input)' };
 
@@ -135,7 +155,7 @@
   function renderList() {
     const filter = $('filter').value;
     const visible = sessions.filter((s) => {
-      if (filter === 'lead') return s.lead || (s.goals || []).includes('lead_submit');
+      if (filter === 'lead') return s.lead || (s.goals || []).includes('form_step1_submit');
       if (filter === 'touch') return s.touches > 0 || s.touch;
       if (filter === 'mouse') return !s.touches && !s.touch;
       return true;
@@ -148,14 +168,14 @@
     }
 
     ul.innerHTML = visible.map((s) => {
-      const hasLead = s.lead || (s.goals || []).includes('lead_submit');
+      const hasLead = s.lead || (s.goals || []).includes('form_step1_submit');
       const src = s.utm && s.utm.source ? s.utm.source : (s.referrer ? new URL(s.referrer, location.href).hostname : 'прямой заход');
       return '<li data-sid="' + escapeHtml(s.sid) + '" class="' + (s.sid === activeSid ? 'is-active' : '') + '">' +
         '<div class="sessions__row"><b>' + fmtDate(s.start) + '</b>' +
         (hasLead ? '<span class="tag tag--lead">заявка</span>' : '<span class="tag">' + fmtTime(s.duration) + '</span>') + '</div>' +
         '<div class="sessions__meta">' + escapeHtml(device(s)) + ', ' + s.vw + '×' + s.vh +
         ' · ' + (s.touches ? s.touches + ' касаний' : s.clicks + ' кликов') + ' · ' + escapeHtml(src) + '</div>' +
-        (s.lead ? '<div class="sessions__meta">' + escapeHtml(s.lead.name) + ', ' + escapeHtml(s.lead.phone) + '</div>' : '') +
+        (s.lead ? '<div class="sessions__meta">' + escapeHtml(s.lead.email) + '</div>' : '') +
         '</li>';
     }).join('');
   }
@@ -342,7 +362,7 @@
         break;
       case 'g':
         send({ cmd: 'goal', name: ev[2] });
-        if (live) showToast('🎯 ' + (GOALS[ev[2]] || ev[2]));
+        if (live && QUIET_GOALS.indexOf(ev[2]) === -1) showToast('🎯 ' + goalText(ev));
         break;
       case 'v':
         if (live) showToast(ev[2] === 'hidden' ? 'Пользователь ушёл со вкладки' : 'Вернулся на вкладку');
@@ -510,8 +530,7 @@
       if (type === 'c') log.push({ t, type, text: (ev[5] ? 'Нажал «' + ev[5] + '»' : 'Клик'), sub: ev[4] });
       if (type === 'f') log.push({ t, type, text: 'Перешёл в поле', sub: ev[2] });
       if (type === 'i') log.push({ t, type, text: /consent/.test(ev[2]) ? (ev[3] ? 'Отметил галочку' : 'Снял галочку') : 'Ввод в поле: ' + ev[3] + ' симв.', sub: ev[2] });
-      if (type === 'g' && !/^scroll_/.test(ev[2])) log.push({ t, type, text: '🎯 ' + (GOALS[ev[2]] || ev[2]) });
-      if (type === 'g' && /^scroll_/.test(ev[2])) log.push({ t, type: 'g', text: GOALS[ev[2]] || ev[2] });
+      if (type === 'g') log.push({ t, type, text: (QUIET_GOALS.indexOf(ev[2]) === -1 ? '🎯 ' : '') + goalText(ev) });
       if (type === 'v') log.push({ t, type, text: ev[2] === 'hidden' ? 'Ушёл со вкладки' : 'Вернулся на вкладку' });
       if (type === 'r' && t > 0) log.push({ t, type, text: 'Размер окна ' + ev[2] + '×' + ev[3] });
     });
@@ -547,7 +566,7 @@
       ['Устройство', device(m) + ', ' + (m.vw || '?') + '×' + (m.vh || '?')],
       ['Источник', utm.source ? [utm.source, utm.medium, utm.campaign].filter(Boolean).join(' / ') : (m.referrer || 'прямой заход')]
     ];
-    if (lead) parts.push(['Заявка', lead.name + ', ' + lead.phone]);
+    if (lead) parts.push(['Заявка', lead.email]);
     $('info').innerHTML = parts.map((p) => '<span>' + p[0] + ': <b>' + escapeHtml(p[1]) + '</b></span>').join('');
   }
 

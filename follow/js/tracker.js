@@ -15,7 +15,10 @@
  *   i  sel len          — ввод в поле (длина значения)
  *   r  w h              — изменение размера окна
  *   v  state            — вкладка visible / hidden
- *   g  name             — цель (например, lead_submit)
+ *   g  name [params]    — цель или событие аналитики (например, form_step1_submit)
+ *
+ * По ТЗ запись и Яндекс Метрика включаются только после согласия в cookie-баннере
+ * (localStorage follow_consent = 'all').
  */
 (function () {
   'use strict';
@@ -27,15 +30,21 @@
   // а только выполняем команды плеера (через postMessage, чтобы работало и с file://).
   if (params.has('replay')) {
     document.documentElement.classList.add('is-replay');
-    window.followTrack = { sid: null, goal: function () {}, start: function () {} };
+    window.followTrack = { sid: null, goal: function () {}, event: function () {}, start: function () {}, clientId: function () { return ''; } };
     window.addEventListener('message', replayCommand);
     return;
   }
+
+  // Элементы, клик по которым в плеере повторяется по-настоящему: так восстанавливается
+  // состояние карточек, вкладок, FAQ и анкеты. Галочки сюда не входят — их состояние приходит
+  // событием ввода, а повторный клик по label переключил бы их дважды.
+  var REPLAY_CLICKABLE = '.card, .chip, [role="tab"], [data-tone], [data-freq], .acc__q, .opt, #quiz-next, #quiz-skip';
 
   function replayCommand(e) {
     var d = e.data;
     if (e.source !== window.parent || !d || d.follow !== 'replay') return;
 
+    var hooks = window.followReplayHooks || {};
     var el = null;
     if (d.sel) {
       try { el = document.querySelector(d.sel); } catch (err) {}
@@ -44,13 +53,10 @@
     if (d.cmd === 'scroll') {
       window.scrollTo(d.x, d.y);
     } else if (d.cmd === 'reset') {
-      document.querySelectorAll('details[open]').forEach(function (x) { x.open = false; });
-      document.querySelectorAll('form').forEach(function (f) { f.reset(); f.hidden = false; });
-      var ok = document.getElementById('lead-success');
-      if (ok) ok.hidden = true;
+      if (hooks.reset) hooks.reset();
     } else if (d.cmd === 'click' && el) {
-      var summary = el.closest('summary');
-      if (summary && summary.parentElement.tagName === 'DETAILS') summary.parentElement.open = !summary.parentElement.open;
+      var target = el.closest(REPLAY_CLICKABLE);
+      if (target) target.click();
       if (d.live) {
         var prev = el.style.outline;
         el.style.outline = '3px solid #ff5470';
@@ -59,15 +65,15 @@
       }
     } else if (d.cmd === 'input' && el) {
       // самих значений нет — показываем точками, сколько символов было введено
-      if (el.type === 'checkbox' || el.type === 'radio') el.checked = d.len > 0;
-      else if (el.tagName !== 'SELECT') el.value = new Array(d.len + 1).join('•');
-    } else if (d.cmd === 'goal' && d.name === 'lead_submit') {
-      var form = document.getElementById('lead-form');
-      var success = document.getElementById('lead-success');
-      if (form && success) {
-        form.hidden = true;
-        success.hidden = false;
+      if (el.type === 'checkbox' || el.type === 'radio') {
+        el.checked = d.len > 0;
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+      } else if (el.tagName !== 'SELECT') {
+        el.value = new Array(d.len + 1).join('•');
       }
+    } else if (d.cmd === 'goal') {
+      if (d.name === 'form_step1_submit' && hooks.startQuiz) hooks.startQuiz();
+      if (d.name === 'form_complete' && hooks.showDone) hooks.showDone();
     }
   }
 
@@ -120,9 +126,15 @@
 
   var CLICKABLE = 'a, button, input, select, textarea, label, summary, [role="button"], [data-track]';
 
+  // Атрибуты, которые однозначно определяют элемент на странице — по ним плеер найдёт его снова
+  var KEY_ATTRS = ['data-track', 'data-card', 'data-chip', 'data-tone', 'data-freq', 'data-share', 'data-cta', 'data-nav'];
+
   function selectorOf(el) {
     if (!el || el.nodeType !== 1) return '';
-    if (el.getAttribute('data-track')) return '[data-track="' + el.getAttribute('data-track') + '"]';
+    for (var a = 0; a < KEY_ATTRS.length; a++) {
+      var v = el.getAttribute(KEY_ATTRS[a]);
+      if (v !== null) return '[' + KEY_ATTRS[a] + '="' + v + '"]';
+    }
     if (el.id) return '#' + el.id;
 
     var parts = [];
@@ -276,12 +288,6 @@
       var sel = selectorOf(target);
       push([now(), 'c', Math.round(e.clientX), Math.round(e.clientY), sel, el ? labelOf(el) : '']);
 
-      // В Метрику: общая цель click и отдельная click_<имя> для кнопок с data-track
-      if (el && window.followMetrika) {
-        var name = el.getAttribute('data-track');
-        window.followMetrika('click', { element: name || labelOf(el) || sel });
-        if (name) window.followMetrika('click_' + name);
-      }
     }, true);
 
     document.addEventListener('focusin', function (e) {
@@ -372,25 +378,41 @@
     };
   }
 
+  var metrikaClientId = '';
+
   function goal(name, goalParams) {
-    push([now(), 'g', name]);
+    var ev = [now(), 'g', name];
+    if (goalParams && Object.keys(goalParams).length) ev.push(goalParams);
+    push(ev);
     if (window.followMetrika) window.followMetrika(name, goalParams);
     flush(false);
   }
 
-  window.followTrack = { sid: sid, vid: vid, start: start, goal: goal, flush: flush };
+  window.followTrack = {
+    sid: sid,
+    vid: vid,
+    start: start,
+    goal: goal,
+    event: goal,
+    flush: flush,
+    clientId: function () { return metrikaClientId; }
+  };
 
   function consentGiven() {
-    return storageGet('localStorage', 'follow_consent') === '1';
+    return storageGet('localStorage', 'follow_consent') === 'all';
+  }
+
+  function enable() {
+    loadMetrika();
+    if (cfg.metrikaId && window.ym) {
+      window.ym(cfg.metrikaId, 'getClientID', function (id) { metrikaClientId = id || ''; });
+    }
+    start();
   }
 
   if (cfg.requireConsent && !consentGiven()) {
-    document.addEventListener('follow:consent', function () {
-      loadMetrika();
-      start();
-    }, { once: true });
+    document.addEventListener('follow:consent', enable, { once: true });
   } else {
-    loadMetrika();
-    start();
+    enable();
   }
 })();

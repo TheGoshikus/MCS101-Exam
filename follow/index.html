@@ -1,173 +1,362 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="no-js">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Follow — оставьте заявку</title>
-  <meta name="description" content="Follow: оставьте заявку, и мы свяжемся с вами.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.add('js');</script>
+  <title>FOLLOW — ранний доступ к приложению</title>
+  <meta name="description" content="FOLLOW превращает ваши данные о сне, движении и питании в несколько простых действий на сегодня. Запишитесь в первую тестовую группу — бесплатно.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="canonical" href="https://follow.com.ai/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="FOLLOW">
+  <meta property="og:url" content="https://follow.com.ai/">
+  <meta property="og:title" content="Знать, как жить, — легко. FOLLOW помогает действительно так жить.">
+  <meta property="og:description" content="Несколько простых действий на сегодня — по вашим данным о сне, движении и питании. Ранний доступ бесплатно.">
+  <meta property="og:image" content="https://follow.com.ai/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon-180.png">
+
+  <link rel="preload" href="assets/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/img/hill-run-800.webp" as="image" media="(max-width: 1023px)">
+  <link rel="preload" href="assets/img/hill-run-1400.webp" as="image" media="(min-width: 1024px)">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/follow.css">
+  <script>document.documentElement.className = 'js';</script>
 
   <script src="js/config.js"></script>
   <script src="js/tracker.js"></script>
 </head>
 <body>
 
-  <header class="topbar">
-    <div class="container topbar__inner">
-      <a href="#top" class="logo" data-track="logo">Follow</a>
-      <nav class="nav">
-        <a href="#benefits" data-track="nav_benefits">Преимущества</a>
-        <a href="#steps" data-track="nav_steps">Как это работает</a>
-        <a href="#faq" data-track="nav_faq">Вопросы</a>
+  <!-- 1. Шапка -->
+  <header class="header" data-block="1">
+    <div class="wrap header__inner">
+      <a href="#top" class="logo" aria-label="FOLLOW — наверх">
+        <picture>
+          <source srcset="assets/img/logo.webp" type="image/webp">
+          <img src="assets/img/logo.png" alt="FOLLOW" width="480" height="80">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Разделы">
+        <a href="#how" data-nav="how">Как это работает</a>
+        <a href="#follow" data-nav="protocols">Протоколы</a>
+        <a href="#faq" data-nav="faq">FAQ</a>
       </nav>
-      <a href="#lead" class="btn btn--small" data-track="cta_header">Оставить заявку</a>
+      <a href="#signup" class="btn btn--header" data-cta="1" data-placement="header">Ранний доступ</a>
     </div>
   </header>
 
   <main id="top">
 
-    <section class="hero">
-      <div class="container hero__inner">
-        <div class="hero__text reveal">
-          <span class="badge">Бесплатная консультация</span>
-          <h1>Follow — ведём вас от&nbsp;первой заявки до&nbsp;результата</h1>
-          <p class="lead">Расскажите о задаче — менеджер свяжется с вами, подберёт решение и посчитает стоимость. Бесплатно и без обязательств.</p>
-          <div class="hero__actions">
-            <a href="#lead" class="btn" data-track="cta_hero">Оставить заявку</a>
-            <a href="#steps" class="btn btn--ghost" data-track="cta_hero_more">Как это работает</a>
-          </div>
-          <ul class="hero__facts">
-            <li><strong>0 ₽</strong> консультация</li>
-            <li><strong>1 мин</strong> на заявку</li>
-            <li><strong>Без</strong> обязательств</li>
-          </ul>
+    <!-- 2. Hero -->
+    <section class="hero" data-block="2" aria-labelledby="hero-title">
+      <div class="wrap hero__inner">
+        <div class="hero__text">
+          <h1 id="hero-title" class="h1">Знать, как жить,&nbsp;— легко. FOLLOW помогает <span class="grad">действительно так жить.</span></h1>
+          <p class="hero__sub">Приложение превращает ваши данные о сне, движении и питании в несколько простых действий на сегодня.</p>
+          <a href="#signup" class="btn btn--hero" data-cta="2" data-placement="hero">Хочу ранний доступ</a>
         </div>
-        <div class="hero__visual reveal" aria-hidden="true">
-          <div class="orbit">
-            <span class="orbit__dot orbit__dot--1"></span>
-            <span class="orbit__dot orbit__dot--2"></span>
-            <span class="orbit__dot orbit__dot--3"></span>
-            <span class="orbit__core">F</span>
+
+        <div class="hero__visual" aria-hidden="true">
+          <div class="phone">
+            <div class="phone__day">Вторник, утро</div>
+            <div class="dial">
+              <svg viewBox="0 0 200 200" class="dial__svg">
+                <g transform="rotate(-90 100 100)" fill="none" stroke-width="26">
+                  <circle cx="100" cy="100" r="74" stroke="#F6E2EC" stroke-dasharray="71.5 393.5"/>
+                  <circle cx="100" cy="100" r="74" stroke="#F6E2EC" stroke-dasharray="71.5 393.5" stroke-dashoffset="-77.5"/>
+                  <circle cx="100" cy="100" r="74" stroke="#F6E2EC" stroke-dasharray="71.5 393.5" stroke-dashoffset="-155"/>
+                  <circle cx="100" cy="100" r="74" stroke="#F6E2EC" stroke-dasharray="71.5 393.5" stroke-dashoffset="-232.5"/>
+                  <circle cx="100" cy="100" r="74" stroke="#F6E2EC" stroke-dasharray="71.5 393.5" stroke-dashoffset="-310"/>
+                  <circle cx="100" cy="100" r="74" stroke="#F6E2EC" stroke-dasharray="71.5 393.5" stroke-dashoffset="-387.5"/>
+                  <circle class="dial__seg" cx="100" cy="100" r="74" stroke="#F5007F" stroke-dasharray="71.5 393.5"/>
+                  <circle class="dial__seg" cx="100" cy="100" r="74" stroke="#F52A0A" stroke-dasharray="71.5 393.5" stroke-dashoffset="-77.5"/>
+                  <circle class="dial__seg" cx="100" cy="100" r="74" stroke="#F75E00" stroke-dasharray="71.5 393.5" stroke-dashoffset="-155"/>
+                </g>
+              </svg>
+              <div class="dial__center"><b class="dial__count">3/6</b><span>на сегодня</span></div>
+            </div>
+            <div class="phone__ask">Спросить FOLLOW</div>
           </div>
+          <div class="task task--1"><span class="task__done">✓</span><div><b>Белок на завтрак</b><small>выполнено</small></div></div>
+          <div class="task task--2"><span class="task__ring task__ring--red"></span><div><b>Лёгкая тренировка 30 мин</b><small>в 18:30</small></div></div>
+          <div class="task task--3"><span class="task__ring task__ring--orange"></span><div><b>Лечь до 23:00</b><small>вечером</small></div></div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="benefits">
-      <div class="container">
-        <h2 class="section__title reveal">Почему выбирают Follow</h2>
-        <div class="cards">
-          <article class="card reveal">
-            <div class="card__icon">⚡</div>
-            <h3>Быстрый старт</h3>
-            <p>Без долгих согласований и лишних встреч — начинаем сразу после звонка.</p>
-          </article>
-          <article class="card reveal">
-            <div class="card__icon">🤝</div>
-            <h3>Личный менеджер</h3>
-            <p>Один человек на связи от заявки до результата. Отвечает в мессенджере и по телефону.</p>
-          </article>
-          <article class="card reveal">
-            <div class="card__icon">📊</div>
-            <h3>Прозрачные условия</h3>
-            <p>Фиксированная цена в договоре и понятный отчёт о каждом этапе работы.</p>
-          </article>
+    <!-- 3. Узнаёте себя? -->
+    <section class="self" data-block="3" aria-labelledby="self-title">
+      <div class="wrap self__inner">
+        <picture class="self__photo">
+          <source media="(min-width: 1024px)" srcset="assets/img/park-run-1400.webp">
+          <img src="assets/img/park-run-800.webp" alt="Пробежка в городском парке" loading="lazy" width="800" height="533">
+        </picture>
+        <div class="self__body">
+          <h2 id="self-title" class="h2">Узнаёте себя?</h2>
+          <p class="self__hint">Отметьте, что про вас</p>
+          <div class="cards" role="group" aria-label="Ситуации">
+            <button type="button" class="card" data-card="0" aria-pressed="false"><span class="card__check" aria-hidden="true"></span><span>«Начну с понедельника»</span></button>
+            <button type="button" class="card" data-card="1" aria-pressed="true"><span class="card__check" aria-hidden="true"></span><span>127 сохранённых постов про здоровье</span></button>
+            <button type="button" class="card" data-card="2" aria-pressed="false"><span class="card__check" aria-hidden="true"></span><span>Часы считают шаги, но ничего не меняется</span></button>
+            <button type="button" class="card" data-card="3" aria-pressed="false"><span class="card__check" aria-hidden="true"></span><span>Каждый день новый совет — и ни одного решения</span></button>
+            <button type="button" class="card" data-card="4" aria-pressed="false"><span class="card__check" aria-hidden="true"></span><span>Нет сил разбираться во всём этом</span></button>
+          </div>
+          <p class="self__note" id="cards-note" aria-live="polite">Отмечено: 1 — передадим в анкету</p>
+          <p class="self__outro">Последняя миля — это всегда разрыв между «знать» и «делать». <span class="accent">FOLLOW — чтобы делать.</span></p>
         </div>
       </div>
     </section>
 
-    <section class="section section--tinted" id="steps">
-      <div class="container">
-        <h2 class="section__title reveal">Как это работает</h2>
-        <ol class="steps">
-          <li class="step reveal">
-            <span class="step__num">1</span>
-            <h3>Заявка</h3>
-            <p>Оставляете имя и телефон — это займёт меньше минуты.</p>
-          </li>
-          <li class="step reveal">
-            <span class="step__num">2</span>
-            <h3>Звонок</h3>
-            <p>Менеджер уточняет задачу и предлагает решение с ценой.</p>
-          </li>
-          <li class="step reveal">
-            <span class="step__num">3</span>
-            <h3>Запуск</h3>
-            <p>Договариваемся об условиях и начинаем работу.</p>
-          </li>
+    <!-- 4. Инсайт -->
+    <section class="insight" data-block="4">
+      <img class="waves" src="assets/img/wave-pattern.svg" alt="" aria-hidden="true">
+      <div class="wrap insight__inner">
+        <ol class="chain" aria-label="Измерять, понимать, рекомендовать — это уже есть. Следовать — это FOLLOW.">
+          <li class="chain__step"><span class="pill">Измерять<i class="pill__ok" aria-hidden="true">✓</i></span><span class="chain__arrow" aria-hidden="true">→</span></li>
+          <li class="chain__step"><span class="pill">Понимать<i class="pill__ok" aria-hidden="true">✓</i></span><span class="chain__arrow" aria-hidden="true">→</span></li>
+          <li class="chain__step"><span class="pill">Рекомендовать<i class="pill__ok" aria-hidden="true">✓</i></span><span class="chain__arrow chain__arrow--accent" aria-hidden="true">→</span></li>
+          <li class="chain__step chain__step--last"><span class="pill pill--follow">Следовать</span><span class="chain__label">FOLLOW</span></li>
         </ol>
-        <div class="center reveal">
-          <a href="#lead" class="btn" data-track="cta_steps">Хочу начать</a>
+        <p class="insight__text">Замеры. Графики. ИИ опять даёт советы. <b>Но хорошая рекомендация сама по себе не делает жизнь лучше.</b></p>
+      </div>
+    </section>
+
+    <!-- 5. Как это работает -->
+    <section class="how" id="how" data-block="5" aria-labelledby="how-title">
+      <div class="how__banner lazybg">
+        <div class="wrap"><h2 id="how-title" class="h2">Как это работает</h2></div>
+      </div>
+      <div class="wrap how__body">
+        <ol class="steps">
+          <li class="step"><b class="step__num">1</b><div><div class="step__title">Подключи то, что уже есть</div><div class="step__text">Часы, кольцо, браслет.</div></div></li>
+          <li class="step"><b class="step__num">2</b><div><div class="step__title">3 действия на сегодня</div><div class="step__text">Вместо 33 советов.</div></div></li>
+          <li class="step step--3"><b class="step__num">3</b><div><div class="step__title">Делай вместе</div><div class="step__text">Протоколы и челленджи — вместе с другими или с самим собой.</div></div></li>
+        </ol>
+
+        <div class="demo">
+          <div class="demo__intro">
+            <div class="demo__title">Помощник объясняет себя</div>
+            <div class="demo__lead">Спросите — и увидите, на чём основан совет.</div>
+            <div class="chips" role="group" aria-label="Вопросы помощнику">
+              <button type="button" class="chip" data-chip="0" aria-pressed="true">Почему сегодня лёгкая тренировка?</button>
+              <button type="button" class="chip" data-chip="1" aria-pressed="false">Почему я устаю после обеда?</button>
+              <button type="button" class="chip" data-chip="2" aria-pressed="false">Что изменить в сне?</button>
+              <button type="button" class="chip" data-chip="3" aria-pressed="false">С чего начать?</button>
+            </div>
+          </div>
+          <div class="dialog" aria-live="polite">
+            <div class="bubble bubble--q" id="demo-q">Почему сегодня лёгкая тренировка?</div>
+            <div class="bubble bubble--a">
+              <div id="demo-a">Вы спали 6 ч, пульс покоя выше обычного на 5 уд/мин. Сегодня лучше 30 минут спокойно, чем час через силу.</div>
+              <div class="tags" id="demo-tags">
+                <div class="tag"><span class="tag__k tag__k--fact">факт</span><span>сон 6 ч, пульс покоя +5</span></div>
+                <div class="tag"><span class="tag__k tag__k--hyp">гипотеза</span><span>организм ещё восстанавливается</span></div>
+                <div class="tag"><span class="tag__k tag__k--rec">рекомендация</span><span>лёгкая тренировка 30 мин</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="how__outro">Больше делегируешь — <span class="accent">больше получаешь.</span></p>
+      </div>
+    </section>
+
+    <!-- 6. Follow: протоколы / люди / вместе -->
+    <section class="follow" id="follow" data-block="6" aria-labelledby="follow-title">
+      <div class="wrap">
+        <div class="follow__head">
+          <h2 id="follow-title" class="h2">Follow</h2>
+          <div class="segment" role="tablist" aria-label="Follow">
+            <button type="button" role="tab" class="segment__btn" id="tab-0" aria-controls="panel-0" aria-selected="true" data-tab="0">Протоколы</button>
+            <button type="button" role="tab" class="segment__btn" id="tab-1" aria-controls="panel-1" aria-selected="false" tabindex="-1" data-tab="1">Люди</button>
+            <button type="button" role="tab" class="segment__btn" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1" data-tab="2">Вместе</button>
+          </div>
+        </div>
+
+        <div class="panel panel--prot" id="panel-0" role="tabpanel" aria-labelledby="tab-0">
+          <div class="prot prot--main lazybg"><div class="prot__title">30 дней глубокого сна</div><div class="prot__meta">идти по понятной тропе</div></div>
+          <div class="prot"><div class="prot__title">Утренняя энергия</div><div class="prot__meta">протокол</div></div>
+          <div class="prot"><div class="prot__title">Белок на завтрак</div><div class="prot__meta">протокол</div></div>
+        </div>
+
+        <div class="panel panel--people" id="panel-1" role="tabpanel" aria-labelledby="tab-1" hidden>
+          <div class="prot"><div class="prot__title">Протокол раннего подъёма</div><div class="prot__meta">Архетип: подъём в 6:30 без будильника за 3 недели</div></div>
+          <div class="prot"><div class="prot__title">Восстановление как у профи</div><div class="prot__meta">Архетип: нагрузка и отдых по данным часов</div></div>
+          <div class="prot prot--empty">Здесь появятся эксперты, которые согласились делиться своими протоколами.</div>
+        </div>
+
+        <div class="panel panel--together" id="panel-2" role="tabpanel" aria-labelledby="tab-2" hidden>
+          <picture class="together__photo">
+            <source media="(min-width: 1024px)" srcset="assets/img/friends-sunset-1400.webp">
+            <img src="assets/img/friends-sunset-800.webp" alt="Друзья на закате" loading="lazy" width="800" height="533">
+          </picture>
+          <div class="prot prot--together">
+            <div class="prot__title">Челлендж «10 000 шагов вместе»</div>
+            <div class="progress" role="img" aria-label="Пример: общий прогресс команды 62%"><span style="width:62%"></span></div>
+            <div class="prot__meta">Общий прогресс команды · 62%</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="faq">
-      <div class="container container--narrow">
-        <h2 class="section__title reveal">Частые вопросы</h2>
-        <details class="faq reveal">
-          <summary data-track="faq_price">Сколько это стоит?</summary>
-          <p>Стоимость зависит от задачи. Менеджер посчитает её после короткого звонка — это бесплатно.</p>
-        </details>
-        <details class="faq reveal">
-          <summary data-track="faq_time">Как быстро вы свяжетесь?</summary>
-          <p>В рабочее время — в тот же день. Если заявка пришла ночью — на следующий рабочий день.</p>
-        </details>
-        <details class="faq reveal">
-          <summary data-track="faq_contract">Работаете по договору?</summary>
-          <p>Да, всегда. Цена и сроки фиксируются в договоре до начала работы.</p>
-        </details>
-        <details class="faq reveal">
-          <summary data-track="faq_data">Что вы делаете с моими данными?</summary>
-          <p>Используем только для связи с вами по заявке и не передаём третьим лицам.</p>
-        </details>
+    <!-- 7. Без давления -->
+    <section class="calm lazybg" data-block="7" aria-labelledby="calm-title">
+      <div class="wrap calm__inner">
+        <div class="calm__body">
+          <h2 id="calm-title" class="h2">Без давления</h2>
+          <ul class="points">
+            <li><i style="background:#F5007F"></i><span><b>Без давления.</b> Всегда можно вернуться.</span></li>
+            <li><i style="background:#F52A0A"></i><span><b>Без анкет и дневников.</b> Заполняй только то, что хочешь сам.</span></li>
+            <li><i style="background:#F75E00"></i><span><b>Всегда видно,</b> что факт, что гипотеза, а что рекомендация.</span></li>
+            <li><i style="background:#F5C8A2"></i><span><b>Не оптимизируйте себя.</b> <span class="accent accent--bold">Пойми себя.</span></span></li>
+          </ul>
+          <div class="persona">
+            <div class="persona__title">Характер помощника — выбираете вы</div>
+            <div class="persona__controls">
+              <div class="segment segment--tone" role="group" aria-label="Тон">
+                <button type="button" class="segment__btn" data-tone="0" aria-pressed="true">Мягко</button>
+                <button type="button" class="segment__btn" data-tone="1" aria-pressed="false">По делу</button>
+              </div>
+              <div class="freqs" role="group" aria-label="Частота">
+                <button type="button" class="freq" data-freq="0" aria-pressed="false">Каждый день</button>
+                <button type="button" class="freq" data-freq="1" aria-pressed="true">Раз в неделю</button>
+                <button type="button" class="freq" data-freq="2" aria-pressed="false">Никогда</button>
+              </div>
+            </div>
+            <div class="persona__msg" id="tone-msg" aria-live="polite">«Доброе утро. Сегодня спокойный день — 30 минут прогулки будет достаточно.» · сводка раз в неделю</div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="section section--accent" id="lead">
-      <div class="container container--narrow">
-        <div class="form-card reveal">
-          <h2>Оставьте заявку</h2>
-          <p class="form-card__sub">Перезвоним и ответим на все вопросы.</p>
+    <!-- 8. Что получают ранние пользователи + Кого мы ищем -->
+    <section class="perks" data-block="8">
+      <div class="wrap perks__inner">
+        <div class="perks__main">
+          <picture class="perks__photo">
+            <source media="(min-width: 1024px)" srcset="assets/img/sea-bikes-1400.webp">
+            <img src="assets/img/sea-bikes-800.webp" alt="Велосипед вдоль моря" loading="lazy" width="800" height="533">
+          </picture>
+          <h2 class="h2 h2--sm">Что получают ранние пользователи</h2>
+          <div class="perk-grid">
+            <div class="perk"><b>Ранний доступ</b><br>бесплатно</div>
+            <div class="perk"><b>Прямой чат</b><br>с командой</div>
+            <div class="perk"><b>Ваши идеи</b><br>попадают в релиз</div>
+            <div class="perk"><b>6 месяцев Premium</b><br>после запуска</div>
+          </div>
+        </div>
+        <div class="perks__who">
+          <h2 class="h2 h2--sm">Кого мы ищем</h2>
+          <ul class="ticks">
+            <li>Смартфон на iOS или Android</li>
+            <li>Готовы 4 недели пользоваться приложением</li>
+            <li>Раз в неделю ответить на 3 вопроса</li>
+            <li>По желанию — 30-минутное интервью</li>
+          </ul>
+          <p class="perks__note">Часы или кольцо — плюс, но не обязательны.</p>
+        </div>
+      </div>
+    </section>
 
-          <form class="form" id="lead-form" novalidate>
-            <label class="field">
-              <span>Имя</span>
-              <input type="text" name="name" id="lead-name" autocomplete="name" placeholder="Как к вам обращаться" required>
-            </label>
-            <label class="field">
-              <span>Телефон</span>
-              <input type="tel" name="phone" id="lead-phone" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
-            </label>
-            <label class="field">
-              <span>Удобный способ связи</span>
-              <select name="channel" id="lead-channel">
-                <option value="call">Звонок</option>
-                <option value="telegram">Telegram</option>
-                <option value="whatsapp">WhatsApp</option>
-              </select>
-            </label>
-            <label class="field">
-              <span>Комментарий <em>(необязательно)</em></span>
-              <textarea name="comment" id="lead-comment" rows="3" placeholder="Коротко о задаче"></textarea>
-            </label>
-            <label class="check">
-              <input type="checkbox" name="consent" id="lead-consent" required>
-              <span>Согласен на обработку персональных данных</span>
-            </label>
-            <p class="form__error" id="lead-error" role="alert" hidden></p>
-            <button type="submit" class="btn btn--wide" data-track="lead_submit">Отправить заявку</button>
+    <!-- 9. FAQ -->
+    <section class="faq" id="faq" data-block="9" aria-labelledby="faq-title">
+      <div class="wrap faq__inner">
+        <div class="faq__list">
+          <h2 id="faq-title" class="h2 h2--sm">Вопросы</h2>
+          <div class="acc" data-q="0">
+            <h3><button type="button" class="acc__q" aria-expanded="true" aria-controls="faq-a0" id="faq-q0"><span>Это медицинское приложение?</span><i aria-hidden="true">−</i></button></h3>
+            <div class="acc__a" id="faq-a0" role="region" aria-labelledby="faq-q0">Нет. FOLLOW не является медицинским изделием и не заменяет консультацию врача. Мы не ставим диагнозов и не спрашиваем о болезнях.</div>
+          </div>
+          <div class="acc" data-q="1">
+            <h3><button type="button" class="acc__q" aria-expanded="false" aria-controls="faq-a1" id="faq-q1"><span>Какие устройства поддерживаются?</span><i aria-hidden="true">+</i></button></h3>
+            <div class="acc__a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden>Apple Watch, Oura, Garmin, Xiaomi/Amazfit, Huawei, Samsung — через Apple Health и Health Connect. Без устройств тоже можно.</div>
+          </div>
+          <div class="acc" data-q="2">
+            <h3><button type="button" class="acc__q" aria-expanded="false" aria-controls="faq-a2" id="faq-q2"><span>Где хранятся мои данные?</span><i aria-hidden="true">+</i></button></h3>
+            <div class="acc__a" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden>На серверах в России. Что FOLLOW помнит о вас, видно в приложении — любой пункт можно стереть.</div>
+          </div>
+          <div class="acc" data-q="3">
+            <h3><button type="button" class="acc__q" aria-expanded="false" aria-controls="faq-a3" id="faq-q3"><span>Сколько стоит?</span><i aria-hidden="true">+</i></button></h3>
+            <div class="acc__a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden>Тест бесплатный. Тестерам после запуска — 6 месяцев Premium.</div>
+          </div>
+          <div class="acc" data-q="4">
+            <h3><button type="button" class="acc__q" aria-expanded="false" aria-controls="faq-a4" id="faq-q4"><span>Когда старт теста?</span><i aria-hidden="true">+</i></button></h3>
+            <div class="acc__a" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden>Пришлём письмо со ссылкой на сборку, когда откроется ваша волна.</div>
+          </div>
+          <div class="acc" data-q="5">
+            <h3><button type="button" class="acc__q" aria-expanded="false" aria-controls="faq-a5" id="faq-q5"><span>Что если я брошу?</span><i aria-hidden="true">+</i></button></h3>
+            <div class="acc__a" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden>Ничего страшного. Пропуск — не провал: просто напишите, что не подошло, это тоже помогает.</div>
+          </div>
+          <div class="acc" data-q="6">
+            <h3><button type="button" class="acc__q" aria-expanded="false" aria-controls="faq-a6" id="faq-q6"><span>Можно позвать друга?</span><i aria-hidden="true">+</i></button></h3>
+            <div class="acc__a" id="faq-a6" role="region" aria-labelledby="faq-q6" hidden>Да. После записи у вас будет ссылка: каждый друг поднимает вас в очереди, три друга — место в первой волне.</div>
+          </div>
+        </div>
+        <aside class="data-card" aria-label="Ваши данные">
+          <div class="data-card__title">Ваши данные</div>
+          <p><b>Что FOLLOW помнит.</b> Список виден в приложении, любой пункт стирается одним касанием.</p>
+          <p><b>Где хранится.</b> На серверах в России, без передачи за рубеж.</p>
+          <p><b>Не врач.</b> FOLLOW поддерживает, но не заменяет консультацию специалиста.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 10. Финальная форма -->
+    <section class="signup lazybg" id="signup" data-block="10" aria-labelledby="signup-title">
+      <div class="wrap signup__inner">
+        <h2 id="signup-title" class="h2 h2--final">Начните жить так, <span class="grad">как давно знаете</span></h2>
+
+        <div class="glass" id="signup-card">
+          <img class="waves waves--card" src="assets/img/wave-pattern.svg" alt="" aria-hidden="true">
+
+          <!-- Шаг 1: email и согласия -->
+          <form class="step1" id="step1" novalidate>
+            <div class="step1__row">
+              <label class="visually-hidden" for="email">Ваш email</label>
+              <input class="input" type="email" id="email" name="email" placeholder="Ваш email" autocomplete="email" inputmode="email" required aria-describedby="email-error">
+              <button type="submit" class="btn btn--form" id="step1-submit" disabled>Хочу ранний доступ</button>
+            </div>
+            <p class="form-error" id="email-error" role="alert" hidden></p>
+            <label class="check"><input type="checkbox" id="c-pd" name="pd" required><span class="check__box" aria-hidden="true"></span><span>Согласен на обработку <a href="consent.html" target="_blank">персональных данных</a></span></label>
+            <label class="check"><input type="checkbox" id="c-age" name="age" required><span class="check__box" aria-hidden="true"></span><span>Мне есть 18 лет</span></label>
+            <label class="check"><input type="checkbox" id="c-news" name="news"><span class="check__box" aria-hidden="true"></span><span>Хочу получать новости FOLLOW (необязательно)</span></label>
+            <!-- ловушка для ботов: людям не видна -->
+            <label class="hp" aria-hidden="true">Сайт <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+            <p class="form-note">Дальше — 5 коротких вопросов, их можно пропустить</p>
           </form>
 
-          <div class="form-success" id="lead-success" hidden>
-            <div class="form-success__icon">✓</div>
-            <h3>Заявка отправлена!</h3>
-            <p>Мы свяжемся с вами в ближайшее время.</p>
-            <button type="button" class="btn btn--ghost" id="lead-again" data-track="lead_again">Отправить ещё одну</button>
+          <!-- Шаг 2: анкета (заполняется скриптом) -->
+          <div class="quiz" id="quiz" hidden>
+            <div class="quiz__top"><span class="quiz__progress" id="quiz-progress">Вопрос 1 из 5</span><button type="button" class="quiz__skip" id="quiz-skip">Пропустить</button></div>
+            <div class="quiz__bar"><span id="quiz-bar"></span></div>
+            <h3 class="quiz__q" id="quiz-q" tabindex="-1"></h3>
+            <p class="quiz__hint" id="quiz-hint"></p>
+            <div class="quiz__opts" id="quiz-opts"></div>
+            <button type="button" class="btn btn--form btn--wide" id="quiz-next">Дальше</button>
+          </div>
+
+          <!-- Шаг 3: вы в списке -->
+          <div class="done" id="done" hidden>
+            <h3 class="done__title" tabindex="-1" id="done-title">Вы в списке<span id="done-place"></span></h3>
+            <p class="done__text">Мы пришлём письмо, когда откроется ваша волна. Позовите друзей — по вашей ссылке они попадут в тот же список.</p>
+            <div class="share">
+              <input class="input input--link" id="ref-link" readonly aria-label="Ваша ссылка">
+              <div class="share__btns">
+                <a class="share__btn" data-share="telegram" target="_blank" rel="noopener">Telegram</a>
+                <a class="share__btn" data-share="whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+                <a class="share__btn" data-share="vk" target="_blank" rel="noopener">VK</a>
+                <button type="button" class="share__btn" data-share="copy">Скопировать ссылку</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -175,20 +364,33 @@
 
   </main>
 
-  <footer class="footer">
-    <div class="container footer__inner">
-      <span>© Follow, 2026</span>
-      <a href="#lead" data-track="cta_footer">Связаться с нами</a>
+  <!-- 11. Футер -->
+  <footer class="footer" data-block="11">
+    <img class="waves waves--footer" src="assets/img/wave-pattern.svg" alt="" aria-hidden="true">
+    <div class="wrap footer__inner">
+      <div class="footer__brand">
+        <img src="assets/img/logo.png" alt="FOLLOW" class="footer__logo" width="480" height="80" loading="lazy">
+        <p>© [ЮР. ЛИЦО] · FOLLOW не является медицинским изделием и не заменяет консультацию врача.</p>
+      </div>
+      <nav class="footer__links" aria-label="Документы">
+        <a href="privacy.html">Политика ПД</a>
+        <a href="consent.html">Согласие на обработку ПД</a>
+      </nav>
     </div>
   </footer>
 
-  <a href="#lead" class="sticky-cta" data-track="cta_sticky_mobile">Оставить заявку</a>
-
-  <div class="cookie" id="cookie" hidden>
-    <p>Мы используем cookies и сервисы аналитики, чтобы сделать сайт удобнее. Продолжая пользоваться сайтом, вы соглашаетесь с этим.</p>
-    <button type="button" class="btn btn--small" id="cookie-ok" data-track="cookie_accept">Принять</button>
+  <div class="sticky" id="sticky">
+    <a href="#signup" class="btn btn--sticky" data-cta="sticky" data-placement="sticky">Хочу ранний доступ</a>
   </div>
 
-  <script src="js/main.js"></script>
+  <div class="cookie" id="cookie" role="dialog" aria-label="Cookies" hidden>
+    <p>Мы используем cookies и Яндекс Метрику, чтобы понимать, удобна ли страница. Подробнее — в <a href="privacy.html">политике</a>.</p>
+    <div class="cookie__btns">
+      <button type="button" class="btn btn--cookie" id="cookie-all">Принять</button>
+      <button type="button" class="cookie__min" id="cookie-min">Только необходимые</button>
+    </div>
+  </div>
+
+  <script src="js/landing.js"></script>
 </body>
 </html>

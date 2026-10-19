@@ -1,0 +1,14 @@
+# Заголовки безопасности для Cloudflare Pages (ТЗ, разд. 7).
+# X-Frame-Options не ставим: Вебвизор Метрики открывает сайт во фрейме — это разрешено через frame-ancestors.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://yastatic.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://mc.yandex.ru https://mc.yandex.com; font-src 'self'; connect-src 'self' https://mc.yandex.ru https://mc.yandex.com wss://mc.yandex.com; frame-src https://mc.yandex.ru https://mc.yandex.com; frame-ancestors 'self' https://metrika.yandex.ru https://metrika.yandex.by https://metrica.yandex.com https://metrica.yandex.com.tr https://*.webvisor.com; base-uri 'self'; form-action 'self'
+
+/replay.html
+  X-Robots-Tag: noindex, nofollow
+
+/assets/*
+  Cache-Control: public, max-age=2592000

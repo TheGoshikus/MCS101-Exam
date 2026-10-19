@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" xmlns:c2pa="http://c2pa.org/manifest">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#F5007F" stop-opacity="0"></stop>
+<stop offset="0.25" stop-color="#F5007F"></stop>
+<stop offset="0.6" stop-color="#F52A0A"></stop>
+<stop offset="0.85" stop-color="#F75E00"></stop>
+<stop offset="1" stop-color="#F5C8A2" stop-opacity="0.2"></stop>
+</linearGradient>
+</defs>
+<g fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round">
+<path d="M0 150 C100 40 200 40 300 150 S500 260 600 150 S800 40 900 150 S1100 260 1200 150"></path>
+<path d="M0 162 C100 56 200 56 300 162 S500 268 600 162 S800 56 900 162 S1100 268 1200 162" opacity="0.85"></path>
+<path d="M0 174 C100 72 200 72 300 174 S500 276 600 174 S800 72 900 174 S1100 276 1200 174" opacity="0.7"></path>
+<path d="M0 138 C100 24 200 24 300 138 S500 252 600 138 S800 24 900 138 S1100 252 1200 138" opacity="0.85"></path>
+<path d="M0 126 C100 8 200 8 300 126 S500 244 600 126 S800 8 900 126 S1100 244 1200 126" opacity="0.7"></path>
+<path d="M0 186 C100 88 200 88 300 186 S500 284 600 186 S800 88 900 186 S1100 284 1200 186" opacity="0.55"></path>
+<path d="M0 114 C100 -8 200 -8 300 114 S500 236 600 114 S800 -8 900 114 S1100 236 1200 114" opacity="0.55"></path>
+</g>
+</svg>
