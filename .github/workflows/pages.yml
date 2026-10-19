@@ -1,0 +1,43 @@
+# Публикует лендинг Follow (папка follow/) на GitHub Pages.
+# Один раз включите: Settings → Pages → Source: GitHub Actions.
+name: Deploy Follow to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+    paths: ['follow/**', '.github/workflows/pages.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # На Pages нет Node-сервера: сервер и данные не публикуем
+      - name: Prepare site
+        run: |
+          mkdir -p _site
+          cp -r follow/index.html follow/replay.html follow/css follow/js _site/
+          [ -d follow/images ] && cp -r follow/images _site/ || true
+          [ -f follow/CNAME ] && cp follow/CNAME _site/ || true
+          touch _site/.nojekyll
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
