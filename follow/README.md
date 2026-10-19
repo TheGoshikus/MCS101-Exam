@@ -35,7 +35,30 @@ follow/
   data/             сюда сервер складывает данные (не коммитится)
 ```
 
-## Запуск
+## Где опубликовано
+
+- Лендинг: https://follow.com.ai (и `www.follow.com.ai`), запасной адрес https://follow-3xn.pages.dev
+- Записи и заявки: https://follow.com.ai/replay.html, вход по `ADMIN_TOKEN`
+- Хостинг: Cloudflare Pages, проект `follow`. API — `functions/api/[[path]].js` (Pages Functions),
+  данные — база Cloudflare D1 `follow-db` (таблицы `sessions`, `chunks`, `leads`).
+- `ADMIN_TOKEN` хранится как секрет проекта Pages. Сменить:
+  `npx wrangler pages secret put ADMIN_TOKEN --project-name follow`, затем `./deploy.sh`.
+
+Обновить сайт после правок:
+
+```bash
+cd follow
+export CLOUDFLARE_API_TOKEN=... CLOUDFLARE_ACCOUNT_ID=...
+./deploy.sh
+```
+
+Выгрузить заявки из базы:
+
+```bash
+npx wrangler d1 execute follow-db --remote --command "SELECT data FROM leads ORDER BY id DESC"
+```
+
+## Запуск на своём сервере (вместо Cloudflare)
 
 ```bash
 cd follow
