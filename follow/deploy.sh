@@ -10,7 +10,7 @@ BRANCH="${1:-main}"
 # В публикацию идут только страницы и статика — без server/, data/ и исходников
 rm -rf dist
 mkdir -p dist
-cp -r index.html replay.html privacy.html consent.html 404.html \
+cp -r index.html replay.html privacy.html consent.html 404.html privacy-en.html terms-en.html ru \
   robots.txt sitemap.xml _headers favicon.ico favicon.png favicon-180.png favicon-512.png \
   css js assets dist/
 
