@@ -12,6 +12,6 @@ rm -rf dist
 mkdir -p dist
 cp -r index.html replay.html privacy.html consent.html 404.html privacy-en.html terms-en.html ru \
   robots.txt sitemap.xml _headers favicon.ico favicon.png favicon-180.png favicon-512.png \
-  css js assets dist/
+  styles.css app.js config.js css js assets dist/
 
 npx --yes wrangler pages deploy dist --project-name follow --branch "$BRANCH" --commit-dirty=true

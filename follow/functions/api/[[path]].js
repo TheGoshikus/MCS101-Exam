@@ -5,6 +5,7 @@
  *   POST /api/track                 — пачка событий от трекера
  *   POST /api/leads                 — заявка, шаг 1: email + согласия (повторный email обновляет заявку)
  *   POST /api/leads/answer          — ответ на вопрос анкеты {id, token, q: 1..5, answer}
+ *   POST /api/early-access          — заявка с английской главной {email, website, source} (контракт из пакета 03.11.2026)
  *   GET  /api/sessions?token=       — список записей
  *   GET  /api/sessions/<sid>?token= — одна запись целиком
  *   GET  /api/leads?token=          — список заявок
@@ -213,6 +214,72 @@ async function lead(request, env) {
   return json({ ok: true, id, token, ref: refCode, place: await placeOf(db, id) });
 }
 
+// Английская главная (пакет 03.11.2026): одно поле email, без анкеты.
+// Ответы по контракту docs/INTEGRATION.md: 200 {ok:true}, 400 invalid_json, 413, 415, 422 invalid_email, 429 + Retry-After, 503.
+async function earlyAccess(request, env) {
+  const type = (request.headers.get('Content-Type') || '').toLowerCase();
+  if (!type.includes('application/json')) return json({ ok: false, code: 'unsupported_media_type' }, 415);
+  const text = await request.text();
+  if (text.length > 8 * 1024) return json({ ok: false, code: 'payload_too_large' }, 413);
+  let body;
+  try { body = JSON.parse(text); } catch (e) { return json({ ok: false, code: 'invalid_json' }, 400); }
+  if (!body || typeof body !== 'object') return json({ ok: false, code: 'invalid_json' }, 400);
+  // ловушка для ботов: тот же ответ, без сохранения
+  if (body.website) return json({ ok: true });
+
+  const email = str(body.email, 300).trim().toLowerCase();
+  if (!email || email.length > 254 || !EMAIL_RE.test(email) || DISPOSABLE.has(email.split('@')[1])) {
+    return json({ ok: false, code: 'invalid_email' }, 422);
+  }
+
+  const db = env.DB;
+  const ip = request.headers.get('CF-Connecting-IP') || '';
+  const now = new Date().toISOString();
+  try {
+    const hourAgo = new Date(Date.now() - 3600 * 1000).toISOString();
+    const recent = await db.prepare('SELECT COUNT(*) AS n FROM signups WHERE ip = ? AND created > ?').bind(ip, hourAgo).first();
+    if (recent && recent.n >= IP_LIMIT_PER_HOUR) {
+      const res = json({ ok: false, code: 'rate_limited' }, 429);
+      res.headers.set('Retry-After', '3600');
+      return res;
+    }
+    const existing = await db.prepare('SELECT id FROM signups WHERE email = ?').bind(email).first();
+    if (existing) {
+      // повторный email: тот же ответ, вторая запись не создаётся
+      await db.prepare('UPDATE signups SET updated = ? WHERE id = ?').bind(now, existing.id).run();
+      return json({ ok: true });
+    }
+    const data = {
+      source: str(body.source, 60) || 'follow-early-access',
+      lang: 'en',
+      consents: { pd: { value: false, at: null }, age: { value: false, at: null }, news: { value: false, at: null } },
+      privacy_notice: '/privacy-en',
+      cards: [],
+      ab_variant: 'EN-2026-11',
+      referrer: str(request.headers.get('Referer'), 500),
+      page: str(request.headers.get('Referer'), 500),
+      country: request.cf && request.cf.country ? request.cf.country : '',
+      user_agent: str(request.headers.get('User-Agent'), 300)
+    };
+    UTM.forEach((k) => { data[k] = ''; });
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        await db.prepare(`INSERT INTO signups (email, token, ref_code, referred_by, data, sid, ip, created, updated)
+                          VALUES (?, ?, ?, NULL, ?, NULL, ?, ?, ?)`)
+          .bind(email, randomCode(24), randomCode(8), JSON.stringify(data), ip, now, now).run();
+        return json({ ok: true });
+      } catch (e) {
+        if (!/UNIQUE/.test(String(e))) throw e;
+        const again = await db.prepare('SELECT id FROM signups WHERE email = ?').bind(email).first();
+        if (again) return json({ ok: true });
+      }
+    }
+    return json({ ok: false, code: 'temporarily_unavailable' }, 503);
+  } catch (e) {
+    return json({ ok: false, code: 'temporarily_unavailable' }, 503);
+  }
+}
+
 async function answer(request, env) {
   const body = await readBody(request);
   const q = Number(body && body.q);
@@ -317,6 +384,7 @@ export async function onRequest({ request, env }) {
     if (request.method === 'POST' && p === '/api/track') return await track(request, env);
     if (request.method === 'POST' && p === '/api/leads') return await lead(request, env);
     if (request.method === 'POST' && p === '/api/leads/answer') return await answer(request, env);
+    if (request.method === 'POST' && p === '/api/early-access') return await earlyAccess(request, env);
 
     if (request.method === 'GET') {
       if (!authorized(request, url, env)) return json({ ok: false, error: 'unauthorized' }, 401);

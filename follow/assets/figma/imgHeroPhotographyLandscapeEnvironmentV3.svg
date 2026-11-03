@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1440" height="856" viewBox="0 0 1440 856" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect id="Alpha / Soft lateral edges" width="1440" height="856" fill="url(#paint0_linear_0_1328)"/>
+<defs>
+<linearGradient id="paint0_linear_0_1328" x1="0" y1="428" x2="1440" y2="428" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0"/>
+<stop offset="0.18" stop-color="white" stop-opacity="0.22"/>
+<stop offset="0.4" stop-color="white" stop-opacity="0.55"/>
+<stop offset="0.58" stop-color="white"/>
+<stop offset="0.78" stop-color="white" stop-opacity="0.95"/>
+<stop offset="0.91" stop-color="white" stop-opacity="0"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>
