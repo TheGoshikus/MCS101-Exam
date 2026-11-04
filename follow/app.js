@@ -74,6 +74,11 @@
       const result = await response.json();
       if (!response.ok || result.ok !== true) throw new Error('Not accepted');
       succeeded = true;
+      // Hide the submitted address once it is accepted.
+      email.value = '';
+      email.blur();
+      const field = email.closest('.email-field');
+      if (field) field.hidden = true;
       button.textContent = 'Request received';
       message('You’re on the list. We’ll email you with the next steps.');
     } catch {
