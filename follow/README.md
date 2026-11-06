@@ -96,3 +96,10 @@ ADMIN_TOKEN=пароль PORT=8080 node server/server.js
 - Яндекс SmartCaptcha, A/B-тест заголовка через Varioqub, CMS для текстов, админка со статусами и фильтрами.
 - Векторный логотип (сейчас PNG из макета), анимация циферблата в Rive/Lottie (сейчас — CSS/SVG при скролле).
 - Ссылки «Контакты», Telegram, VK в футере — нужны адреса.
+
+## Автодеплой
+
+Любая правка в папке `follow/` в ветке `master` сама выкладывается на follow.com.ai
+(GitHub Actions → `.github/workflows/deploy-follow.yml` → `follow/deploy.sh main`).
+Секреты репозитория: `CLOUDFLARE_API_TOKEN` (право «Cloudflare Pages: Edit»), `CLOUDFLARE_ACCOUNT_ID`.
+Ручной запуск: Actions → Deploy FOLLOW to follow.com.ai → Run workflow. Откат: Cloudflare → follow → Deployments → Rollback.
